@@ -9,14 +9,18 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import $ from './../consts';
+import Modal from '@material-ui/core/Modal';
 
 export default class Home extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-            products: null
+            products: null,
+            detalhesModalVenda:true
         }
+        
+        this.handleClose = this.handleClose.bind(this);
     }
 
     componentDidMount(){
@@ -29,10 +33,30 @@ export default class Home extends Component{
         
     }
 
+    handleClose = () => {
+    this.setState({ detalhesModalVenda: false });
+    };
+
     render(){
          
         return(
         <div style={{ width: '100%'}}>
+        <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={this.state.detalhesModalVenda}
+        onClose={this.handleClose}
+        >
+        <div className={""}>
+            <Typography variant="title" id="modal-title">
+            Text in a modal
+            </Typography>
+            <Typography variant="subheading" id="simple-modal-description">
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </Typography>
+        </div>
+        </Modal>
+
         {this.state.products?
             this.state.products.map(prod => {
                 return (
